@@ -10,7 +10,7 @@ interface AuthState {
   logout: () => void;
 }
 
-export const authStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   token: null,
   organisationId: null,
   user: null,
@@ -19,8 +19,3 @@ export const authStore = create<AuthState>((set) => ({
   setUser: (user) => set({ user }),
   logout: () => set({ token: null, organisationId: null, user: null }),
 }));
-
-if (typeof window !== 'undefined') {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).__authStore = authStore;
-}

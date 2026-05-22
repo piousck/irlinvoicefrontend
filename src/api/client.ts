@@ -1,22 +1,17 @@
 import axios from 'axios';
-
-const getAuthState = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mod = (window as any).__authStore;
-  return mod ? mod.getState() : null;
-};
+import { useAuthStore } from '../store/authStore';
 
 export const apiClient = axios.create({
   baseURL: '/api',
 });
 
 apiClient.interceptors.request.use((config) => {
-  const state = getAuthState();
-  if (state?.token) {
+  const state = useAuthStore.getState();
+  if (state.token) {
     config.headers = config.headers ?? {};
     config.headers['Authorization'] = `Bearer ${state.token}`;
   }
-  if (state?.organisationId) {
+  if (state.organisationId) {
     config.headers = config.headers ?? {};
     config.headers['X-Organisation-ID'] = state.organisationId;
   }
@@ -27,8 +22,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const state = getAuthState();
-      if (state?.logout) state.logout();
+      useAuthStore.getState().logout();
       window.location.href = '/login';
     }
     return Promise.reject(error);
