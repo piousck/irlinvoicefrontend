@@ -15,7 +15,7 @@ export const DocTypeBadge: React.FC<{ type: DocumentType }> = ({ type }) => {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium capitalize',
+        'inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium',
         typeStyles[key],
       )}
     >
