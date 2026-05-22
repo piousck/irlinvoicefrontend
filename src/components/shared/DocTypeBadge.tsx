@@ -7,7 +7,7 @@ const typeStyles: Record<string, string> = {
   credit_note: 'bg-orange-100 text-orange-800',
   receipt: 'bg-teal-100 text-teal-800',
   statement: 'bg-indigo-100 text-indigo-800',
-  unknown: 'bg-slate-200 text-slate-600',
+  unknown: 'bg-slate-200 text-slate-700',
 };
 
 export const DocTypeBadge: React.FC<{ type: DocumentType }> = ({ type }) => {

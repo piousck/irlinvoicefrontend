@@ -10,7 +10,7 @@ export const ConfidenceBar: React.FC<{ value?: number }> = ({ value }) => {
     <div className="mt-1 h-1.5 w-full rounded-full bg-slate-200">
       <div
         className={`h-1.5 rounded-full transition-all ${color}`}
-        style={{ width: `${Math.round(value)}%` }}
+        style={{ width: `${Math.min(100, Math.round(value))}%` }}
       />
     </div>
   );
