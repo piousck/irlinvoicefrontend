@@ -13,7 +13,3 @@ body {
 .dark body {
   @apply bg-slate-900 text-slate-50;
 }
-
-.scrollbar-thin {
-  scrollbar-width: thin;
-}
