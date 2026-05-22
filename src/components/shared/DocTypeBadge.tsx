@@ -7,7 +7,7 @@ const typeStyles: Record<string, string> = {
   credit_note: 'bg-orange-100 text-orange-800',
   receipt: 'bg-teal-100 text-teal-800',
   statement: 'bg-indigo-100 text-indigo-800',
-  unknown: 'bg-slate-200 text-slate-700',
+  unknown: 'bg-slate-200 text-slate-600',
 };
 
 export const DocTypeBadge: React.FC<{ type: DocumentType }> = ({ type }) => {
@@ -15,7 +15,7 @@ export const DocTypeBadge: React.FC<{ type: DocumentType }> = ({ type }) => {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium',
+        'inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium capitalize',
         typeStyles[key],
       )}
     >

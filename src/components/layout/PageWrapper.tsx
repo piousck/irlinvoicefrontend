@@ -4,5 +4,5 @@ export const PageWrapper: React.FC<{ children: React.ReactNode; className?: stri
   children,
   className = '',
 }) => (
-  <div className={`h-full overflow-y-auto bg-warm-off p-5 ${className}`}>{children}</div>
+  <div className={`h-full overflow-auto p-4 md:p-6 ${className}`}>{children}</div>
 );

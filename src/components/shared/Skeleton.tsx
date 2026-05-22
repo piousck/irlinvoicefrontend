@@ -11,9 +11,9 @@ export const Skeleton: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const SkeletonTable: React.FC = () => (
-  <div className="rounded-lg bg-white p-4 shadow-sm space-y-3">
-    <Skeleton className="h-8 w-1/3" />
-    {[...Array(6)].map((_, i) => (
+  <div className="space-y-2 rounded-lg bg-white p-4 shadow-sm">
+    <Skeleton className="h-8 w-64" />
+    {Array.from({ length: 6 }).map((_, i) => (
       <Skeleton key={i} className="h-10 w-full" />
     ))}
   </div>

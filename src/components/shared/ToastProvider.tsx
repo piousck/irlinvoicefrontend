@@ -16,11 +16,18 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
-const variantStyles: Record<ToastVariant, string> = {
-  success: 'border-l-4 border-l-emerald-500',
-  error: 'border-l-4 border-l-red-500',
-  info: 'border-l-4 border-l-blue-500',
-  warning: 'border-l-4 border-l-amber-500',
+const variantBorder: Record<ToastVariant, string> = {
+  success: 'border-emerald-300 bg-emerald-50',
+  error: 'border-red-300 bg-red-50',
+  info: 'border-blue-300 bg-blue-50',
+  warning: 'border-amber-300 bg-amber-50',
+};
+
+const variantTitle: Record<ToastVariant, string> = {
+  success: 'text-emerald-800',
+  error: 'text-red-800',
+  info: 'text-blue-800',
+  warning: 'text-amber-800',
 };
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -42,13 +49,13 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           <div
             key={toast.id}
             className={cn(
-              'pointer-events-auto w-72 rounded-lg bg-white px-4 py-3 shadow-lg',
-              variantStyles[toast.variant],
+              'pointer-events-auto min-w-[280px] max-w-sm rounded-lg border px-4 py-3 shadow-lg',
+              variantBorder[toast.variant],
             )}
           >
-            <p className="text-sm font-semibold text-slate-800">{toast.title}</p>
+            <p className={cn('text-sm font-semibold', variantTitle[toast.variant])}>{toast.title}</p>
             {toast.description && (
-              <p className="mt-0.5 text-xs text-slate-500">{toast.description}</p>
+              <p className="mt-0.5 text-xs text-slate-600">{toast.description}</p>
             )}
           </div>
         ))}
