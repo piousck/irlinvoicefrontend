@@ -8,7 +8,7 @@ export function useExports() {
     queryFn: listExports,
     staleTime: 10_000,
     refetchInterval: (query) => {
-      const anyPending = (query.state.data ?? []).some((e: ExportRun) => e.status === 'pending');
+      const anyPending = (query.state.data ?? []).some((e) => e.status === 'pending');
       return anyPending ? 5_000 : false;
     },
   });
