@@ -7,7 +7,7 @@ export async function createReviewAction(
     action_type: 'approve' | 'reject' | 'correct_field';
     field_name?: string;
     corrected_value?: string;
-  }
+  },
 ) {
   const { data } = await apiClient.post(`/review/${documentId}/action`, body);
   return data;

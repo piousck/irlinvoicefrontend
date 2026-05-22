@@ -1,44 +1,36 @@
 import axios from 'axios';
 
-// Lazy import to avoid circular dependency
-let _getState: (() => { token: string | null; organisationId: string | null; logout: () => void }) | null = null;
-
-export function registerAuthStore(
-  getState: () => { token: string | null; organisationId: string | null; logout: () => void }
-) {
-  _getState = getState;
-}
+const getAuthState = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mod = (window as any).__authStore;
+  return mod ? mod.getState() : null;
+};
 
 export const apiClient = axios.create({
   baseURL: '/api',
 });
 
 apiClient.interceptors.request.use((config) => {
-  if (_getState) {
-    const state = _getState();
-    if (state.token) {
-      config.headers = config.headers ?? {};
-      (config.headers as Record<string, string>)['Authorization'] = `Bearer ${state.token}`;
-    }
-    if (state.organisationId) {
-      config.headers = config.headers ?? {};
-      (config.headers as Record<string, string>)['X-Organisation-ID'] = state.organisationId;
-    }
+  const state = getAuthState();
+  if (state?.token) {
+    config.headers = config.headers ?? {};
+    config.headers['Authorization'] = `Bearer ${state.token}`;
+  }
+  if (state?.organisationId) {
+    config.headers = config.headers ?? {};
+    config.headers['X-Organisation-ID'] = state.organisationId;
   }
   return config;
 });
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error: unknown) => {
-    if (
-      axios.isAxiosError(error) &&
-      error.response?.status === 401 &&
-      _getState
-    ) {
-      _getState().logout();
+  (error) => {
+    if (error.response?.status === 401) {
+      const state = getAuthState();
+      if (state?.logout) state.logout();
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
